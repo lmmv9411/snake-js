@@ -121,8 +121,7 @@ function move(code) {
         direction.x = x;
         direction.y = y;
     }
-
-
+    
 }
 
 function losing() {
@@ -153,7 +152,6 @@ function losing() {
 function draw() {
 
     const newHead = newPosition();
-    collition(newHead);
 
     if (state === STOP) {
         return;
@@ -161,8 +159,7 @@ function draw() {
 
     //Clean 
     ctx.clearRect(0, 0, width, height);
-
-
+    
     //Eat
     ctx.fillStyle = 'Red'
 
@@ -188,6 +185,8 @@ function draw() {
     for (let part of body) {
         ctx.fillRect(part.x, part.y, part.width, part.height);
     }
+
+    collition(newHead);
 
 }
 
