@@ -12,7 +12,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 90vh;
     background-color: darkslategray;
 }
 
@@ -30,6 +30,10 @@ body {
 
 .score {
     padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .retro-button {
@@ -41,25 +45,30 @@ body {
     padding: 5px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 4px 4px 0 #00ff00;  /* Sombra verde para el efecto 3D */
+    box-shadow: 4px 4px 0 #00ff00;
+    /* Sombra verde para el efecto 3D */
     transition: all 0.2s ease;
-  } 
+}
 
-  .retro-button:hover {
+.retro-button:hover {
     background-color: #333;
-    box-shadow: 6px 6px 0 #00ff00;  /* Incrementa la sombra al pasar el ratón */
-  }
+    box-shadow: 6px 6px 0 #00ff00;
+    /* Incrementa la sombra al pasar el ratón */
+}
 
-  .retro-button:active {
-    box-shadow: 2px 2px 0 #00ff00;  /* Reduce la sombra para simular el efecto de hundirse al presionar */
+.retro-button:active {
+    box-shadow: 2px 2px 0 #00ff00;
+    /* Reduce la sombra para simular el efecto de hundirse al presionar */
     background-color: #444;
-    transform: translate(2px, 2px);  /* Mueve el botón para dar la sensación de estar presionado */
-  }
+    transform: translate(2px, 2px);
+    /* Mueve el botón para dar la sensación de estar presionado */
+}
 
 #score {
     background-color: rgb(52, 59, 57);
     border: none;
     outline: none;
+    width: 20px;
 }
 
 @media screen and (max-width: 728px) {

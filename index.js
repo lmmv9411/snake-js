@@ -130,6 +130,10 @@ window.addEventListener('keydown', e => move(e.code));
 
 function move(code) {
 
+    if (state !== RUN) {
+        return;
+    }
+
     if (!DIRECTIONS.hasOwnProperty(code)) {
         console.log("own", code);
         return;
@@ -231,8 +235,8 @@ btngame.addEventListener('click', () => {
     } else {
         state = RUN;
         btngame.textContent = "Stop";
+        main();
     }
-    main();
 });
 
 function main() {
