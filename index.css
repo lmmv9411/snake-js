@@ -1,13 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "VT323", monospace;
+    font-size: 20pt;
+    color: rgb(179, 187, 179);
+}
+
 body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     background-color: darkslategray;
 }
 
 #canvas {
     background-color: rgb(36, 41, 39);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+}
+
+.container {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(52, 59, 57);
+}
+
+.score {
+    padding: 5px;
+}
+
+.retro-button {
+    outline: none;
+    font-family: 'VT323', monospace;
+    background-color: #222;
+    color: #00ff00;
+    border: 3px solid #00ff00;
+    padding: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #00ff00;  /* Sombra verde para el efecto 3D */
+    transition: all 0.2s ease;
+  } 
+
+  .retro-button:hover {
+    background-color: #333;
+    box-shadow: 6px 6px 0 #00ff00;  /* Incrementa la sombra al pasar el ratón */
+  }
+
+  .retro-button:active {
+    box-shadow: 2px 2px 0 #00ff00;  /* Reduce la sombra para simular el efecto de hundirse al presionar */
+    background-color: #444;
+    transform: translate(2px, 2px);  /* Mueve el botón para dar la sensación de estar presionado */
+  }
+
+#score {
+    background-color: rgb(52, 59, 57);
+    border: none;
+    outline: none;
 }
 
 @media screen and (max-width: 728px) {
