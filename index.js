@@ -145,7 +145,7 @@ function losing() {
         ctx.fillRect(part.x, part.y, part.width, part.height);
     }
 
-    timeout = setTimeout(run, (1000 / frames) * 2);
+    timeout = setTimeout(losing, (1000 / frames) * 2);
     animation = requestAnimationFrame(losing)
 
 }
