@@ -62,7 +62,6 @@ function randomPosition() {
         onBody = body.filter(p => p.x === x && p.y === y).length > 0;
     } while (onBody);
 
-
     return { x, y }
 }
 
@@ -75,12 +74,14 @@ function collition(head) {
         gameover.play();
         navigator.vibrate(300);
         state = STOP;
+        return;
     }
 
     if (head.x === eat.x && head.y === eat.y) {
         food.play();
         navigator.vibrate(100);
         state = EATEN;
+        return;
     }
 
     for (let part of body) {
