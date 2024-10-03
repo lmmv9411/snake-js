@@ -1,0 +1,18 @@
+body {
+    background-color: darkslategray;
+}
+
+#canvas {
+    background-color: rgb(36, 41, 39);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+@media screen and (max-width: 728px) {
+    #canvas {
+        width: 350px;
+        height: 350px;
+    }
+}
