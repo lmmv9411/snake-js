@@ -127,7 +127,7 @@ function collition(head) {
 
     if (head.x === food.x && head.y === food.y) {
         food_audio.play();
-        navigator.vibrate(100);
+        navigator.vibrate(50);
         state = EATEN;
         return;
     }
