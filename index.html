@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
     <script src="index.js" defer type="module"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,700,0,0" />
     <title>Snake</title>
 </head>
 
@@ -23,8 +25,35 @@
             </div>
             <button class="retro-button" id="btngame">Start Game</button>
         </div>
+
         <canvas width="500" height="500" id="canvas"></canvas>
+
+        <div class="controls">
+            <button id="up" class="retro-button">
+                <span class="material-symbols-outlined">
+                    arrow_upward
+                </span>
+            </button>
+            <div class="horizontal-controls">
+                <button id="left" class="retro-button">
+                    <span class="material-symbols-outlined">
+                        arrow_back
+                    </span>
+                </button>
+                <button id="down" class="retro-button">
+                    <span class="material-symbols-outlined">
+                        arrow_Downward
+                    </span>
+                </button>
+                <button id="right" class="retro-button">
+                    <span class="material-symbols-outlined">
+                        arrow_forward
+                    </span>
+                </button>
+            </div>
+        </div>
     </div>
+
 
 </body>
 
