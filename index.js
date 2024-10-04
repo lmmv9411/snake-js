@@ -94,11 +94,9 @@ function fixDirection() {
 
 
     if (Math.abs(direction.x) > Math.abs(direction.y)) { // Ajustar dirección horizontal
-        const xPosition = direction.x > 0 ? head.x + head.width : head.x;
-        direction.x = adjustDirection(xPosition, column_size, direction.x, col_margin);
+        direction.x = adjustDirection(head.x, column_size, direction.x, col_margin);
     } else { // Ajustar dirección vertical
-        const yPosition = direction.y > 0 ? head.y + head.width : head.y;
-        direction.y = adjustDirection(yPosition, row_size, direction.y, row_margin);
+        direction.y = adjustDirection(head.y, row_size, direction.y, row_margin);
     }
 }
 
