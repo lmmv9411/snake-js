@@ -41,7 +41,7 @@ const head = {
     height: column_size
 };
 
-const body = [head];
+let body = [head];
 
 const food = {
     x: 0,
@@ -72,6 +72,34 @@ function randomPosition(isBody = false) {
     } while (crashes);
 
     return { x, y }
+}
+
+function fixDirection() {
+    const head = body[0];
+    const margin = 5;
+
+    //Cálculo de margenes
+    const col_margin = numcolumns - margin;
+    const row_margin = numrows - margin;
+
+    function adjustDirection(position, size, direction, maxMargin) {
+        const boundary = Math.floor(position / size);
+        if (direction > 0 && boundary >= maxMargin) {
+            return -1;
+        } else if (direction < 0 && boundary <= margin) {
+            return 1;
+        }
+        return direction;
+    }
+
+
+    if (Math.abs(direction.x) > Math.abs(direction.y)) { // Ajustar dirección horizontal
+        const xPosition = direction.x > 0 ? head.x + head.width : head.x;
+        direction.x = adjustDirection(xPosition, column_size, direction.x, col_margin);
+    } else { // Ajustar dirección vertical
+        const yPosition = direction.y > 0 ? head.y + head.width : head.y;
+        direction.y = adjustDirection(yPosition, row_size, direction.y, row_margin);
+    }
 }
 
 function randomDirecion() {
@@ -250,7 +278,12 @@ function main() {
     head.x = rh.x;
     head.y = rh.y;
 
+    body = [head];
+
     direction.x = rd.x;
     direction.y = rd.y;
+
+    fixDirection();
+
     run();
 }
