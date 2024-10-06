@@ -14,6 +14,8 @@ const gameover = document.getElementById('gameover');
 const width = canvas.width;
 const height = canvas.height;
 
+const speed = 10;
+
 const frames = 20;
 
 const numrows = height / frames;
@@ -149,10 +151,11 @@ function collition(head) {
 }
 
 const interpolacion = 0.1;
-const targetPosition = {};
+const targetPosition = { x: head.x, y: head.y };
 
 function newPosition() {
   const currentHead = body[0];
+
   targetPosition.x = direction.x * column_size;
   targetPosition.y = direction.y * row_size;
 
@@ -263,7 +266,7 @@ function run() {
   }
 
   animation = requestAnimationFrame(draw)
-  timeout = setTimeout(run, 18);
+  timeout = setTimeout(run, speed);
 
 }
 
