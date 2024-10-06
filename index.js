@@ -14,7 +14,7 @@ const gameover = document.getElementById('gameover');
 const width = canvas.width;
 const height = canvas.height;
 
-const speed = 10;
+const speed = 14;
 
 const frames = 20;
 
