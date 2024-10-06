@@ -120,7 +120,9 @@ function collition(head) {
   }
 
   function checkFoodCollision(head) {
-    return head.x === food.x && head.y === food.y;
+    return (head.x + column_size) > food.x && (head.y + row_size) > food.y &&
+      (food.x + column_size) > head.x && (food.y + row_size) > head.y
+
   }
 
   function endGame() {
@@ -146,11 +148,17 @@ function collition(head) {
 
 }
 
+const interpolacion = 0.1;
+const targetPosition = {};
+
 function newPosition() {
   const currentHead = body[0];
+  targetPosition.x = direction.x * column_size;
+  targetPosition.y = direction.y * row_size;
+
   return {
-    x: currentHead.x + direction.x * column_size,
-    y: currentHead.y + direction.y * row_size
+    x: currentHead.x + targetPosition.x * interpolacion,
+    y: currentHead.y + targetPosition.y * interpolacion
   };
 }
 
@@ -159,13 +167,6 @@ function move(code) {
   if (state !== RUN) {
     return;
   }
-
-  if (!DIRECTIONS.hasOwnProperty(code)) {
-    console.log("own", code);
-    return;
-  }
-
-  //mover.play()
 
   const [x, y] = DIRECTIONS[code];
 
@@ -189,16 +190,23 @@ function losing() {
   ctx.clearRect(0, 0, width, height);
 
   //Body
-  body.pop();
+  if (body.length - 5 > 0) {
+    body.splice(-5)
+  } else {
+    body.splice(body.length - 1)
+  }
 
   ctx.fillStyle = '#00ff00'
 
   body.forEach(p => ctx.fillRect(p.x, p.y, column_size, row_size));
 
-  timeout = setTimeout(() => {}, 200);
+  // timeout = setTimeout(() => {}, 10);
   animation = requestAnimationFrame(losing)
 
 }
+
+const growthSize = 10;
+let segmentsToGrow = 0;
 
 function draw() {
 
@@ -222,6 +230,7 @@ function draw() {
     food.y = y;
     count++;
     score.value = count;
+    segmentsToGrow += growthSize;
   }
 
   ctx.fillRect(food.x, food.y, column_size, row_size);
@@ -233,7 +242,12 @@ function draw() {
   if (state === EATEN) {
     state = RUN;
   } else {
-    body.pop();
+    if (segmentsToGrow > 0) {
+      segmentsToGrow--;
+    } else {
+      body.pop();
+    }
+
   }
 
   body.forEach(p => ctx.fillRect(p.x, p.y, column_size, row_size));
@@ -249,7 +263,7 @@ function run() {
   }
 
   animation = requestAnimationFrame(draw)
-  timeout = setTimeout(run, 140);
+  timeout = setTimeout(run, 18);
 
 }
 
@@ -286,5 +300,3 @@ btngame.addEventListener('click', () => {
     main();
   }
 });
-
-window.addEventListener('keydown', e => move(e.code));
