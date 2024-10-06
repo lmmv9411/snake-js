@@ -300,3 +300,5 @@ btngame.addEventListener('click', () => {
     main();
   }
 });
+
+window.addEventListener('keydown', e => move(e.code));
