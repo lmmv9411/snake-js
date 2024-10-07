@@ -8,21 +8,18 @@ const btngame = document.getElementById('btngame');
 
 //audio
 const food_audio = document.getElementById('food');
-const mover = document.getElementById('move');
+//const mover = document.getElementById('move');
 const gameover = document.getElementById('gameover');
 
 const width = canvas.width;
 const height = canvas.height;
 
-const speed = 14;
+const speed = 20;
 
-const frames = 20;
+const cells_size = 40;
 
-const numrows = height / frames;
-const numcolumns = width / frames;
-
-const column_size = width / numcolumns;
-const row_size = height / numrows;
+const numrows = height / cells_size;
+const numcolumns = width / cells_size;
 
 const STOP = 0,
   RUN = 1,
@@ -57,8 +54,8 @@ function randomPosition(isBody = false) {
   let x, y;
 
   do {
-    x = Math.floor(Math.random() * numcolumns) * column_size;
-    y = Math.floor(Math.random() * numrows) * row_size;
+    x = Math.floor(Math.random() * numcolumns) * cells_size;
+    y = Math.floor(Math.random() * numrows) * cells_size;
 
     if (isBody) {
       crashes = food.x == x && food.y === y;
@@ -103,17 +100,17 @@ function fixDirection() {
 
 
   if (Math.abs(direction.x) > Math.abs(direction.y)) { // Ajustar dirección horizontal
-    direction.x = adjustDirection(head.x, column_size, direction.x, col_margin);
+    direction.x = adjustDirection(head.x, cells_size, direction.x, col_margin);
   } else { // Ajustar dirección vertical
-    direction.y = adjustDirection(head.y, row_size, direction.y, row_margin);
+    direction.y = adjustDirection(head.y, cells_size, direction.y, row_margin);
   }
 }
 
 function collition(head) {
 
   function checkBorderCollision(head) {
-    const sx = head.x + column_size;
-    const sy = head.y + row_size;
+    const sx = head.x + cells_size;
+    const sy = head.y + cells_size;
     return head.x < 0 || sx > width || head.y < 0 || sy > height;
   }
 
@@ -122,8 +119,8 @@ function collition(head) {
   }
 
   function checkFoodCollision(head) {
-    return (head.x + column_size) > food.x && (head.y + row_size) > food.y &&
-      (food.x + column_size) > head.x && (food.y + row_size) > head.y
+    return (head.x + cells_size) > food.x && (head.y + cells_size) > food.y &&
+      (food.x + cells_size) > head.x && (food.y + cells_size) > head.y
 
   }
 
@@ -135,7 +132,7 @@ function collition(head) {
 
   function eatFood() {
     food_audio.play();
-    navigator.vibrate(50);
+    navigator.vibrate(100);
     state = EATEN;
   }
 
@@ -150,14 +147,14 @@ function collition(head) {
 
 }
 
-const interpolacion = 0.1;
+const interpolacion = .1;
 const targetPosition = { x: head.x, y: head.y };
 
 function newPosition() {
   const currentHead = body[0];
 
-  targetPosition.x = direction.x * column_size;
-  targetPosition.y = direction.y * row_size;
+  targetPosition.x = direction.x * cells_size;
+  targetPosition.y = direction.y * cells_size;
 
   return {
     x: currentHead.x + targetPosition.x * interpolacion,
@@ -174,21 +171,14 @@ function move(code) {
   const [x, y] = DIRECTIONS[code];
 
   if (-x !== direction.x || -y !== direction.y) {
+    navigator.vibrate(50)
     direction.x = x;
     direction.y = y;
-    navigator.vibrate(15)
   }
 
 }
 
-function losing() {
-
-  if (body.length === 1) {
-    cancelAnimationFrame(animation);
-    clearTimeout(timeout);
-    return;
-  }
-
+function drawLosing() {
   //Clean 
   ctx.clearRect(0, 0, width, height);
 
@@ -201,11 +191,20 @@ function losing() {
 
   ctx.fillStyle = '#00ff00'
 
-  body.forEach(p => ctx.fillRect(p.x, p.y, column_size, row_size));
+  body.forEach(p => ctx.fillRect(p.x, p.y, cells_size, cells_size));
+  
+}
 
-  // timeout = setTimeout(() => {}, 10);
-  animation = requestAnimationFrame(losing)
+function losing() {
 
+  if (body.length === 1) {
+    cancelAnimationFrame(animation);
+    clearTimeout(timeout);
+    return;
+  }
+
+  animation = requestAnimationFrame(drawLosing)
+  timeout = setTimeout(losing, speed);
 }
 
 const growthSize = 10;
@@ -234,26 +233,22 @@ function draw() {
     count++;
     score.value = count;
     segmentsToGrow += growthSize;
+    state = RUN;
   }
 
-  ctx.fillRect(food.x, food.y, column_size, row_size);
+  ctx.fillRect(food.x, food.y, cells_size, cells_size);
 
   //Body
   body.unshift(newHead);
   ctx.fillStyle = '#00ff00'
 
-  if (state === EATEN) {
-    state = RUN;
+  if (segmentsToGrow > 0) {
+    segmentsToGrow--;
   } else {
-    if (segmentsToGrow > 0) {
-      segmentsToGrow--;
-    } else {
-      body.pop();
-    }
-
+    body.pop();
   }
 
-  body.forEach(p => ctx.fillRect(p.x, p.y, column_size, row_size));
+  body.forEach(p => ctx.fillRect(p.x, p.y, cells_size, cells_size));
 
 }
 
